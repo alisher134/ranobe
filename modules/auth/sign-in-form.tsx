@@ -6,16 +6,15 @@ import { AuthRedirect } from './ui/auth-redirect';
 import { AuthCard } from './ui/auth-card';
 import { AuthForm } from './ui/auth-form';
 import { AuthSubmitButton } from './ui/auth-submit-button';
-import { AuthError } from './ui/auth-error';
 import Link from 'next/link';
 
 export function SignInForm() {
-  const { form, onSubmit, error } = useSignIn();
+  const { form, onSubmit } = useSignIn();
 
   return (
     <AuthCard>
       <AuthForm form={form} onSubmit={onSubmit}>
-        <FormTextField name="nickName" label="Никнейм" />
+        <FormTextField name="identity" label="Никнейм или Email" />
 
         <FormPasswordField
           name="password"
@@ -28,8 +27,6 @@ export function SignInForm() {
             </div>
           }
         />
-
-        <AuthError error={error} />
 
         <AuthSubmitButton>Войти</AuthSubmitButton>
       </AuthForm>

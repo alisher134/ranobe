@@ -1,14 +1,14 @@
 import z from 'zod';
 
 export const SignInSchema = z.object({
-  nickName: z.string().min(1, 'Никнейм обязателен'),
+  identity: z.string().min(1, 'Никнейм или Email обязателен'),
   password: z.string().min(6, 'Пароль обязателен'),
 });
 
 export const SignUpSchema = z
   .object({
     email: z.email('Некорректный email'),
-    nickName: z.string().min(2, 'Никнейм должен быть не менее 2 символов'),
+    nickname: z.string().min(2, 'Никнейм должен быть не менее 2 символов'),
     password: z.string().min(6, 'Пароль должен быть не менее 6 символов'),
     confirmPassword: z
       .string()

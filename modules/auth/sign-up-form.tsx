@@ -10,20 +10,17 @@ import { AuthRedirect } from './ui/auth-redirect';
 import { AuthCard } from './ui/auth-card';
 import { AuthForm } from './ui/auth-form';
 import { AuthSubmitButton } from './ui/auth-submit-button';
-import { AuthError } from './ui/auth-error';
 
 export function SignUpForm() {
-  const { form, onSubmit, error } = useSignUp();
+  const { form, onSubmit } = useSignUp();
 
   return (
     <AuthCard>
       <AuthForm form={form} onSubmit={onSubmit}>
         <FormEmailField name="email" label="Email" />
-        <FormTextField name="nickName" label="Никнейм" />
+        <FormTextField name="nickname" label="Никнейм" />
         <FormPasswordField name="password" label="Пароль" />
         <FormPasswordField name="confirmPassword" label="Подтвердите пароль" />
-
-        <AuthError error={error} />
 
         <AuthSubmitButton>Зарегистрироваться</AuthSubmitButton>
       </AuthForm>
