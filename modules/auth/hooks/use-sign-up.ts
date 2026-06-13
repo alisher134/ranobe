@@ -5,9 +5,10 @@ import { SignUpFormValues, SignUpSchema } from '../models/schemas';
 import { useSignUpMutation } from '../api/authApi';
 import { useRouter } from 'next/navigation';
 import { toastError, toastSuccess } from '@/shared/lib';
+import { PATHS } from '@/shared/config';
 
 export const useSignUp = () => {
-  const [signUp] = useSignUpMutation();
+  const [signUp, { isLoading }] = useSignUpMutation();
 
   const form = useZodForm(SignUpSchema, {
     defaultValues: {
@@ -24,7 +25,7 @@ export const useSignUp = () => {
     try {
       await signUp(data).unwrap();
       toastSuccess('Регистрация успешна');
-      router.replace('/');
+      router.replace(PATHS.home);
     } catch (error) {
       toastError(error, 'Ошибка при регистрации');
     }
@@ -33,5 +34,6 @@ export const useSignUp = () => {
   return {
     form,
     onSubmit,
+    isLoading,
   };
 };

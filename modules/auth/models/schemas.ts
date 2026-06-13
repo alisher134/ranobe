@@ -2,7 +2,7 @@ import z from 'zod';
 
 export const SignInSchema = z.object({
   identity: z.string().min(1, 'Никнейм или Email обязателен'),
-  password: z.string().min(6, 'Пароль обязателен'),
+  password: z.string().min(1, 'Пароль обязателен'),
 });
 
 export const SignUpSchema = z

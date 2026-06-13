@@ -5,9 +5,8 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { ENV } from '../config';
+import { ENV, PATHS } from '../config';
 import { TokenService } from '../services';
-import { AuthResponse } from '@/modules/auth/models/types';
 import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
@@ -60,7 +59,7 @@ const baseQueryWithReauth: BaseQueryFn<
         const refreshToken = TokenService.getRefreshToken();
         if (!refreshToken) {
           TokenService.clearTokens();
-          window.location.href = '/sign-in';
+          window.location.href = PATHS.signIn;
           return result;
         }
 
@@ -75,12 +74,17 @@ const baseQueryWithReauth: BaseQueryFn<
         );
 
         if (refreshResult.data) {
-          const data = refreshResult.data as AuthResponse;
+          const data = refreshResult.data as {
+            accessToken: string;
+            refreshToken: string;
+          };
+
           TokenService.setTokens(data.accessToken, data.refreshToken);
           result = await baseQuery(args, store, extraOptions);
         } else {
           TokenService.clearTokens();
-          window.location.href = '/sign-in';
+          if (typeof window !== undefined) window.location.href = PATHS.signIn;
+          return result;
         }
       } finally {
         release();

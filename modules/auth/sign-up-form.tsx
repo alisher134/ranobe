@@ -10,9 +10,10 @@ import { AuthRedirect } from './ui/auth-redirect';
 import { AuthCard } from './ui/auth-card';
 import { AuthForm } from './ui/auth-form';
 import { AuthSubmitButton } from './ui/auth-submit-button';
+import { PATHS } from '@/shared/config';
 
 export function SignUpForm() {
-  const { form, onSubmit } = useSignUp();
+  const { form, onSubmit, isLoading } = useSignUp();
 
   return (
     <AuthCard>
@@ -22,13 +23,15 @@ export function SignUpForm() {
         <FormPasswordField name="password" label="Пароль" />
         <FormPasswordField name="confirmPassword" label="Подтвердите пароль" />
 
-        <AuthSubmitButton>Зарегистрироваться</AuthSubmitButton>
+        <AuthSubmitButton isLoading={isLoading} isDisabled={isLoading}>
+          Зарегистрироваться
+        </AuthSubmitButton>
       </AuthForm>
 
       <AuthRedirect
         title="Уже есть аккаунт?"
         linkText="Войдите"
-        redirectUrl="/sign-in"
+        redirectUrl={PATHS.signIn}
       />
     </AuthCard>
   );

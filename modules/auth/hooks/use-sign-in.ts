@@ -5,9 +5,10 @@ import { SignInFormValues, SignInSchema } from '../models/schemas';
 import { useSignInMutation } from '../api/authApi';
 import { useRouter } from 'next/navigation';
 import { toastError, toastSuccess } from '@/shared/lib';
+import { PATHS } from '@/shared/config';
 
 export const useSignIn = () => {
-  const [signIn] = useSignInMutation();
+  const [signIn, { isLoading }] = useSignInMutation();
 
   const form = useZodForm(SignInSchema, {
     defaultValues: {
@@ -22,7 +23,7 @@ export const useSignIn = () => {
     try {
       await signIn(data).unwrap();
       toastSuccess('Авторизация успешна');
-      router.replace('/');
+      router.replace(PATHS.home);
     } catch (error) {
       toastError(error, 'Ошибка при входе');
     }
@@ -31,5 +32,6 @@ export const useSignIn = () => {
   return {
     form,
     onSubmit,
+    isLoading,
   };
 };

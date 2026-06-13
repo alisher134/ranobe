@@ -7,9 +7,10 @@ import { AuthCard } from './ui/auth-card';
 import { AuthForm } from './ui/auth-form';
 import { AuthSubmitButton } from './ui/auth-submit-button';
 import Link from 'next/link';
+import { PATHS } from '@/shared/config';
 
 export function SignInForm() {
-  const { form, onSubmit } = useSignIn();
+  const { form, onSubmit, isLoading } = useSignIn();
 
   return (
     <AuthCard>
@@ -21,20 +22,22 @@ export function SignInForm() {
           label="Пароль"
           description={
             <div className="flex justify-end">
-              <Link href="/forgot-password" className="text-sm underline">
+              <Link href={PATHS.forgotPassword} className="text-sm underline">
                 Забыли пароль?
               </Link>
             </div>
           }
         />
 
-        <AuthSubmitButton>Войти</AuthSubmitButton>
+        <AuthSubmitButton isLoading={isLoading} isDisabled={isLoading}>
+          Войти
+        </AuthSubmitButton>
       </AuthForm>
 
       <AuthRedirect
         title="Нет аккаунта?"
         linkText="Зарегистрируйтесь"
-        redirectUrl="/sign-up"
+        redirectUrl={PATHS.signUp}
       />
     </AuthCard>
   );
